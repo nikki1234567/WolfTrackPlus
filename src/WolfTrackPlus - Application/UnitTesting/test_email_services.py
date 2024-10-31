@@ -133,6 +133,86 @@ class TestEmailService(unittest.TestCase):
                 email="invalid@email",
                 status="Interview Scheduled"
             )
+    @patch('smtplib.SMTP_SSL')
+    def test_email_with_empty_fields(self, mock_smtp):
+        """Test email sending with empty required fields"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+
+        result = s_email(
+            company_name="",
+            location="",
+            job_Profile="",
+            salary="",
+            email="test@example.com",
+            status=""
+        )
+
+        self.assertTrue(result)
+        mock_server.sendmail.assert_called_once()
+
+    @patch('smtplib.SMTP_SSL')
+    def test_multiple_emails_sequence(self, mock_smtp):
+        """Test sending multiple emails in sequence"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        result1 = s_email(
+            company_name="Google",
+            location="Mountain View",
+            job_Profile="Software Engineer",
+            salary="120000",
+            email="test@example.com",
+            status="Applied"
+        )
+        
+        result2 = status_change_email(
+            application_id="123",
+            email="test@example.com",
+            status="Interview Scheduled"
+        )
+        
+        self.assertTrue(result1)
+        self.assertTrue(result2)
+        self.assertEqual(mock_server.sendmail.call_count, 2)
+
+    @patch('smtplib.SMTP_SSL')
+    def test_email_with_special_characters(self, mock_smtp):
+        """Test email sending with special characters in fields"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        result = s_email(
+            company_name="Company@#$%",
+            location="City!@#",
+            job_Profile="Engineer&*()",
+            salary="100,000$",
+            email="test@example.com",
+            status="Applied!"
+        )
+        
+        self.assertTrue(result)
+        mock_server.sendmail.assert_called_once()
+
+    @patch('smtplib.SMTP_SSL')
+    def test_email_with_very_long_input(self, mock_smtp):
+        """Test email sending with very long input fields"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        long_text = "a" * 1000 
+        
+        result = s_email(
+            company_name=long_text,
+            location=long_text,
+            job_Profile=long_text,
+            salary=long_text,
+            email="test@example.com",
+            status=long_text
+        )
+        
+        self.assertTrue(result)
+        mock_server.sendmail.assert_called_once()
 
 
 if __name__ == '__main__':

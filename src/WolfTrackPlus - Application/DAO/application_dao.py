@@ -265,6 +265,7 @@ class application_dao:
         Returns:
             self: runs the SQL query to update an application in the database, and returns the execution status of the query.
         """
+        "test Commit"
 
         res = self.__db.run_query(
             "SELECT company_name,company.company_id, role, roles.role_id"

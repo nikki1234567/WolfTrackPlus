@@ -65,39 +65,56 @@ class application_dao:
         )[0][0]
 
         if resume:
-            resume_data = base64.b64encode(resume).decode('utf-8')
-            base_query = (
-                "INSERT INTO application (user_id, company_id, role_id, application_date, "
-                "job_description, salary, location, status, imortant_links, resume) VALUES ("
-                f"{str(userId)}, "
-                f"{str(companyId)}, "
-                f"{str(roleId)}, "
-                f"{date_applied}, "
-                f"'{job_profile}', "
-                f"{str(salary)}, "
-                f"'{location}', "
-                f"'{status}', "
-                f"'{notes}', "
-                f"'{resume_data}'" 
-                ");"
-            )
+           resume_data = base64.b64encode(resume).decode('utf-8')
+           base_query = (
+               "INSERT INTO application (user_id, company_id, role_id, application_date, job_description, "
+               "salary, location, status, imortant_links, resume) VALUES ("
+               + str(userId)
+               + ", "
+               + str(companyId)
+               + ", "
+               + str(roleId)
+               + ", '"
+               + date_applied
+               + "', '"
+               + job_profile
+               + "', "
+               + str(salary)
+               + ", '"
+               + location
+               + "', '"
+               + status
+               + "', '"
+               + notes
+               + "', '"
+               + resume_data
+               + "');"
+           )
         else:
             base_query = (
-                "INSERT INTO application (user_id, company_id, role_id, application_date, "
-                "job_description, salary, location, status, imortant_links, resume) VALUES ("
-                f"{str(userId)}, "
-                f"{str(companyId)}, "
-                f"{str(roleId)}, "
-                f"{date_applied}, "
-                f"'{job_profile}', "
-                f"{str(salary)}, "
-                f"'{location}', "
-                f"'{status}', "
-                f"'{notes}', "
-                "NULL" 
-                ");"
+               "INSERT INTO application (user_id, company_id, role_id, application_date, job_description, "
+               "salary, location, status, imortant_links, resume) VALUES ("
+               + str(userId)
+               + ", "
+               + str(companyId)
+               + ", "
+               + str(roleId)
+               + ", '"
+               + date_applied
+               + "', '"
+               + job_profile
+               + "', "
+               + str(salary)
+               + ", '"
+               + location
+               + "', '"
+               + status
+               + "', '"
+               + notes
+               + "', "
+               + "NULL"
+               + ");"
             )
-
         
         # # if resume is None:
         # #     base_query += "NULL);"

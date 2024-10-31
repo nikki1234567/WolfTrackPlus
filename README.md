@@ -42,11 +42,13 @@ Looking for a seamless way to manage your job search? Our Job Application Tracke
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/dinesh-pasupuleti/WolfTrackPlus)
 ![GitHub open issues](https://img.shields.io/github/issues/dinesh-pasupuleti/WolfTrackPlus)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/dinesh-pasupuleti/WolfTrackPlus)
-[![GitHub version](https://img.shields.io/github/v/release/prateeksingamsetty/WolfTrackPlus)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/releases)
-[![Python Style Checker](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/style_checker.yml/badge.svg)](https://github.com/prateeksingamsetty/WolfTrackPlus/actions/workflows/style_checker.yml)
+[![GitHub version](https://img.shields.io/github/v/release/dinesh-pasupuleti/WolfTrackPlus)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/releases)
+[![Python Style Checker](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/style_checker.yml/badge.svg)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/style_checker.yml)
+[![Code Formatting](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/code-format.yml/badge.svg)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/code-format.yml)
 ![GitHub all downloads](https://img.shields.io/github/downloads/dinesh-pasupuleti/WolfTrackPlus/total)
-[![Lint Python](https://github.com/prateeksingamsetty/WolfTrackPlus/actions/workflows/syntax_checker.yml/badge.svg)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/syntax_checker.yml)
-![Code Coverage](https://github.com/dinesh-pasupuleti/WolfTrackPlus/blob/project3/Project3/Assets/coverage.svg)
+[![Lint Python](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/syntax_checker.yml/badge.svg)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/syntax_checker.yml)
+[![Unit Tests](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/python-tests.yml/badge.svg)](https://github.com/dinesh-pasupuleti/WolfTrackPlus/actions/workflows/python-tests.yml)
+[![Code Coverage](https://codecov.io/gh/dinesh-pasupuleti/WolfTrackPlus/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN)](https://codecov.io/gh/dinesh-pasupuleti/WolfTrackPlus)
 [![Documentation Status](https://readthedocs.org/projects/wolftrackplus/badge/?version=latest)](https://wolftrackplus.readthedocs.io/en/latest/?badge=latest)
 
 

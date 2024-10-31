@@ -51,5 +51,39 @@ class TestApplicationDAO(unittest.TestCase):
         result = self.app_dao.get_application(email, status)
         self.assertEqual(len(result), 2)
 
+    def test_get_resume_existing_user(self):
+        email = 'user@example.com'
+        encoded_resume = 'UmVzdW1lIGRhdGE='
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], [(encoded_resume,)]
+        ]
+        result = self.app_dao.get_resume(email)
+        self.assertEqual(result, b'Resume data')
+
+    def test_update_application_valid(self):
+        application_id = 1
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [('Company Old', 1, 'Role Old', 1)], None, [(2,)], None, [(2,)], True
+        ]
+        result = self.app_dao.update_application(
+            'Company New', 'Location New', 'Role New', 70000,
+            'username', 'password', 'question', 'answer',
+            'notes', '2023-10-31', 'Interview', application_id
+        )
+        self.assertTrue(result)
+
+    def test_delete_application(self):
+        application_id = 1
+        self.app_dao._application_dao__db.run_query.return_value = True
+        result = self.app_dao.delete_application(application_id)
+        self.assertTrue(result)
+
+    def test_change_status(self):
+        application_id = 1
+        new_status = 'Offer'
+        self.app_dao._application_dao__db.run_query.return_value = True
+        result = self.app_dao.change_status(application_id, new_status)
+        self.assertTrue(result)
+
 if __name__ == '__main__':
     unittest.main()

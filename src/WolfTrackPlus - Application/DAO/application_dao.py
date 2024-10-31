@@ -97,21 +97,6 @@ class application_dao:
                 "NULL" 
                 ");"
             )
-
-        
-        # # if resume is None:
-        # #     base_query += "NULL);"
-        # # else:
-        # #     # base_query += f"'{resume_data}');"
-        # #     base_query += "NULL);"
-        # print('-------')
-        # print('-------')
-        # print('-------')
-        # print('-------')
-        # # print(base_query)
-        # print('-------')
-        # print('-------')
-        # print('-------') 
         return self.__db.run_query(base_query)
 
     def get_application(self, email, application_status):

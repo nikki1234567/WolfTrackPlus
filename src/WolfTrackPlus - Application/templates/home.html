@@ -938,10 +938,10 @@
                 </button>
             </div>
             <div class="modal-body" style="text-align: left;">
-                <form action="/add_new_application" method="POST" id="add-new-application">
+                <form action="/add_new_application" method="POST" id="add-new-application" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputName">Company Name</label>
-                        <input type="password" name="companyName" class="form-control" id="exampleInputName"
+                        <input type="text" name="companyName" class="form-control" id="exampleInputName"
                             placeholder="Enter Company Name" required="required">
                     </div>
                     <div class="form-group">
@@ -1042,9 +1042,9 @@
                                 id="example-date-input">
                         </div>
                     </div>
-                    <div class="form-group mt-3">
-                        <label class="mr-4">Upload your CV:</label>
-                        <input type="file" name="file">
+                    <div class="form-group">
+                        <label for="resume">Resume (PDF only)</label>
+                        <input type="file" class="form-control-file" id="resume" name="resume" accept=".pdf">
                     </div>
                     <div class="form-group">
                         <input class="form-control" id="status" name="status" type="hidden" value="TO_DO">

@@ -120,6 +120,99 @@ class TestPasswordResetDAO(unittest.TestCase):
        self.assertEqual(result, 1234)
 
 
+   def test_update_password_long_password(self):
+       email = "test@example.com"
+       password = "p" * 256
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.update_password(email, password)
+       self.assertTrue(result)
+
+
+   def test_upsert_code_long_code(self):
+       email = "test@example.com"
+       code = int("1" * 15)
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.upsert_code(email, code)
+       self.assertTrue(result)
+
+
+   def test_upsert_code_sql_injection_attempt(self):
+       email = "test@example.com"
+       code = "1234; DROP TABLE users;"
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.upsert_code(email, code)
+       self.assertTrue(result)
+
+
+   def test_update_password_sql_injection_attempt(self):
+       email = "test@example.com"
+       password = "1234'); DROP TABLE users;--"
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.update_password(email, password)
+       self.assertTrue(result)
+
+
+   def test_upsert_code_empty_email(self):
+       email = ""
+       code = 1234
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.upsert_code(email, code)
+       self.assertTrue(result)
+
+
+   def test_update_password_empty_email(self):
+       email = ""
+       password = "password123"
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.update_password(email, password)
+       self.assertTrue(result)
+
+
+   def test_upsert_code_null_code(self):
+       email = "test@example.com"
+       code = None
+       self.dao._password_reset_dao__db.run_query.return_value = True
+       result = self.dao.upsert_code(email, code)
+       self.assertTrue(result)
+
+
+
+
+class TestPasswordResetResource(unittest.TestCase):
+
+
+   def setUp(self):
+       app = Flask(__name__)
+       api = Api(app)
+       self.client = app.test_client()
+       self.resource = PasswordReset()
+       self.resource.password_reset = MagicMock()
+
+
+   def test_upsert_code(self):
+       email = "test@example.com"
+       code = 1234
+       self.resource.password_reset.upsert_code.return_value = True
+       result = self.resource.upsert(email, code)
+       self.assertTrue(result)
+
+
+   def test_get_code(self):
+       email = "test@example.com"
+       code = 1234
+       self.resource.password_reset.get_code.return_value = code
+       result = self.resource.get_code(email)
+       self.assertEqual(result, code)
+
+
+   def test_update_password(self):
+       email = "test@example.com"
+       password = "new_password"
+       self.resource.password_reset.update_password.return_value = True
+       result = self.resource.update_password(email, password)
+       self.assertTrue(result)
+
+
 
 
 if __name__ == "__main__":

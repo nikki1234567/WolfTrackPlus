@@ -85,5 +85,45 @@ class TestApplicationDAO(unittest.TestCase):
         result = self.app_dao.change_status(application_id, new_status)
         self.assertTrue(result)
 
+    def test_get_locations_for_application(self):
+        email = 'user@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], [('Location A',), ('Location B',)]
+        ]
+        result = self.app_dao.get_locations_for_application(email)
+        self.assertEqual(result, ['Location A', 'Location B'])
+
+    def test_get_company_names_for_application(self):
+        email = 'user@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], [('Company A',), ('Company B',)]
+        ]
+        result = self.app_dao.get_company_names_for_application(email)
+        self.assertEqual(result, ['Company A', 'Company B'])
+
+    def test_add_application_invalid_email(self):
+        email = 'invalid@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            []
+        ]
+        with self.assertRaises(IndexError):
+            self.app_dao.add_application(
+                email, 'Company', 'Location', 'Job', 50000,
+                'username', 'password', 'question', 'answer',
+                'notes', '2023-10-31', 'Applied', b'Resume data'
+            )
+
+    def test_add_application_missing_mandatory_fields(self):
+        email = 'user@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)]
+        ]
+        with self.assertRaises(TypeError):
+            self.app_dao.add_application(
+                email, None, 'Location', 'Job', 50000,
+                'username', 'password', 'question', 'answer',
+                'notes', '2023-10-31', 'Applied', b'Resume data'
+            )
+
 if __name__ == '__main__':
     unittest.main()

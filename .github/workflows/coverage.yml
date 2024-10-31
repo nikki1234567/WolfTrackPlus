@@ -27,6 +27,7 @@ jobs:
         coverage run -m unittest discover -s UnitTesting -t .
         coverage report
         coverage xml
+        cp coverage.xml ../../coverage.xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:

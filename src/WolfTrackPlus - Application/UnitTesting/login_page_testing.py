@@ -1,8 +1,9 @@
 from unittest.main import main
 from flask import app
-from flask.typing import StatusCode
+# from flask.typing import StatusCode
 import unittest
 import sys, os, inspect
+import io
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -69,6 +70,9 @@ class FlaskTest(unittest.TestCase):
             with c.session_transaction() as sess:
                 sess["email"] = "test@gmail.com"
                 sess["password"] = "password"
+        
+        test_pdf_content = b'%PDF-1.4 Test PDF content'
+        
         response = c.post(
             "/add_new_application",
             data={
@@ -82,7 +86,8 @@ class FlaskTest(unittest.TestCase):
                 "notes": "Check back in 2 weeks",
                 "username": "abc@adobe.com",
                 "password": "password1",
-            },
+                "resume": (io.BytesIO(test_pdf_content), "test_resume.pdf", "application/pdf")
+            }
         )
         self.assertEqual(response.status_code, 400)
 

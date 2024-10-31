@@ -2,7 +2,7 @@ from datetime import datetime
 import json
 from sqlite3 import IntegrityError
 from flask import Blueprint, flash, session,jsonify
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, send_file
 from flask_login import login_required, logout_user, login_manager
 from werkzeug.utils import redirect
 from Controller.user_controller import User
@@ -13,6 +13,7 @@ from Controller.geocoding_helper import get_location_coordinates
 from collections import Counter
 import requests
 import random
+import io
 
 api_key = '68188bd34eea4250107ae82ee6d61054'
 app_id = '394232b1'
@@ -264,6 +265,7 @@ def add_new_application():
 
     :return:
     """
+
     company_name = request.form["companyName"]
     location = request.form["location"]
     job_profile = request.form["jobProfile"]
@@ -276,6 +278,16 @@ def add_new_application():
     date_applied = request.form["dateApplied"]
     status = request.form["status"]
     #print("status", status)
+
+    resume_content = None
+    if 'resume' in request.files:
+        resume_file = request.files['resume']
+        if resume_file and resume_file.filename.endswith('.pdf'):
+            resume_content = resume_file.read()
+            print("Resume content length:", len(resume_content))  # Debug
+
+
+
     result = application.post(
         session["email"],
         company_name,
@@ -289,6 +301,7 @@ def add_new_application():
         notes,
         date_applied,
         status,
+        resume_content
     )
     if result == 0:
         error = "This job application could not be stored in the database. Please try again."
@@ -309,6 +322,28 @@ def add_new_application():
         status,
     )
     return redirect("/auth")
+
+@home_route.route('/download_resume')
+def download_resume():
+    try:
+        resume_data = application.get_resume(session["email"])
+        
+        if resume_data:
+            file_stream = io.BytesIO(resume_data)
+            file_stream.seek(0)
+            
+            return send_file(
+                file_stream,
+                mimetype='application/pdf',
+                as_attachment=True,
+                download_name=f'resume.pdf'
+            )
+        else:
+            return "No resume found", 404
+            
+    except Exception as e:
+        print(f"Error in download_resume: {e}")
+        return f"Error: {str(e)}", 500
 
 
 @home_route.route("/change_status_application", methods=["POST"])

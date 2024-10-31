@@ -282,6 +282,91 @@ class TestEmailService(unittest.TestCase):
         self.assertTrue(result)
         mock_server.sendmail.assert_called_once()
 
+    @patch('smtplib.SMTP_SSL')
+    def test_multiple_registration_emails(self, mock_smtp):
+        """Test sending multiple registration emails in sequence"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        test_users = [
+            ("John Doe", "john@example.com"),
+            ("Jane Smith", "jane@example.com"),
+            ("Bob Johnson", "bob@example.com")
+        ]
+        
+        for name, email in test_users:
+            result = send_registration_email(name=name, email=email)
+            self.assertTrue(result)
+        
+        self.assertEqual(mock_server.sendmail.call_count, len(test_users))
+
+    @patch('smtplib.SMTP_SSL')
+    def test_email_with_numerical_values(self, mock_smtp):
+        """Test email sending with different numerical formats"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        result = s_email(
+            company_name="Company123",
+            location="123 Main St",
+            job_Profile="Engineer Level 2",
+            salary="1,234,567.89",
+            email="test@example.com",
+            status="Applied"
+        )
+        
+        self.assertTrue(result)
+        mock_server.sendmail.assert_called_once()
+
+    @patch('smtplib.SMTP_SSL')
+    def test_email_with_whitespace(self, mock_smtp):
+        """Test email sending with extra whitespace in fields"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        result = s_email(
+            company_name="   Google   ",
+            location="   Mountain View   ",
+            job_Profile="   Software Engineer   ",
+            salary="   120000   ",
+            email="test@example.com",
+            status="   Applied   "
+        )
+        
+        self.assertTrue(result)
+        mock_server.sendmail.assert_called_once()
+
+    @patch('smtplib.SMTP_SSL')
+    def test_email_content_verification(self, mock_smtp):
+        """Test verification of email content"""
+        mock_server = MagicMock()
+        mock_smtp.return_value.__enter__.return_value = mock_server
+        
+        company = "TestCompany"
+        location = "TestLocation"
+        job_profile = "TestProfile"
+        salary = "100000"
+        status = "Applied"
+        
+        result = s_email(
+            company_name=company,
+            location=location,
+            job_Profile=job_profile,
+            salary=salary,
+            email="test@example.com",
+            status=status
+        )
+        
+        self.assertTrue(result)
+        mock_server.sendmail.assert_called_once()
+        args = mock_server.sendmail.call_args[0]
+        email_content = str(args[2])
+        self.assertIn(company, email_content)
+        self.assertIn(location, email_content)
+        self.assertIn(job_profile, email_content)
+        self.assertIn(salary, email_content)
+        self.assertIn(status, email_content)
+
 
 if __name__ == '__main__':
     unittest.main()

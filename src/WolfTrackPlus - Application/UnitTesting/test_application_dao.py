@@ -179,5 +179,108 @@ class TestApplicationDAO(unittest.TestCase):
         )
         self.assertTrue(result)
 
+    def test_add_application_large_input(self):
+        email = 'user@example.com'
+        large_text = 'A' * 10000
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], None, [(1,)], None, [(1,)], True
+        ]
+        result = self.app_dao.add_application(
+            email, large_text, 'Location', 'Job', 50000,
+            'username', 'password', 'question', 'answer',
+            'notes', '2023-10-31', 'Applied', None
+        )
+        self.assertTrue(result)
+
+    def test_add_application_negative_salary(self):
+        email = 'user@example.com'
+        salary = -50000
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], None, [(1,)], None, [(1,)], True
+        ]
+        result = self.app_dao.add_application(
+            email, 'Company', 'Location', 'Job', salary,
+            'username', 'password', 'question', 'answer',
+            'notes', '2023-10-31', 'Applied', None
+        )
+        self.assertTrue(result)
+
+    def test_get_application_invalid_email(self):
+        email = 'invalidemail'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            []
+        ]
+        with self.assertRaises(IndexError):
+            self.app_dao.get_application(email, '')
+
+    def test_add_application_invalid_date(self):
+        email = 'user@example.com'
+        invalid_date = '31-10-2023'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], None, [(1,)], None, [(1,)], True
+        ]
+        result = self.app_dao.add_application(
+            email, 'Company', 'Location', 'Job', 50000,
+            'username', 'password', 'question', 'answer',
+            'notes', invalid_date, 'Applied', None
+        )
+        self.assertTrue(result)
+
+    def test_get_locations_for_application_no_results(self):
+        email = 'user@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], []
+        ]
+        result = self.app_dao.get_locations_for_application(email)
+        self.assertEqual(result, [])
+
+    def test_get_company_names_for_application_no_results(self):
+        email = 'user@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], []
+        ]
+        result = self.app_dao.get_company_names_for_application(email)
+        self.assertEqual(result, [])
+
+    def test_add_application_null_optional_fields(self):
+        email = 'user@example.com'
+        notes = None
+        resume = None
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], None, [(1,)], None, [(1,)], True
+        ]
+        adjusted_notes = notes if notes is not None else ''
+        result = self.app_dao.add_application(
+            email, 'Company', 'Location', 'Job', 50000,
+            'username', 'password', 'question', 'answer',
+            adjusted_notes, '2023-10-31', 'Applied', resume
+        )
+        self.assertTrue(result)
+
+    def test_get_application_empty_status(self):
+        email = 'user@example.com'
+        status = ''
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], [
+                ['Company A', 'Applied', '2023-10-31', 1, 'Location A', 'Job A', 50000, 'notes A']
+            ]
+        ]
+        result = self.app_dao.get_application(email, status)
+        self.assertEqual(len(result), 1)
+
+    def test_get_resume_nonexistent_user(self):
+        email = 'nonexistent@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            []
+        ]
+        result = self.app_dao.get_resume(email)
+        self.assertIsNone(result)
+
+    def test_delete_application_invalid_id(self):
+        application_id = 'invalid'
+        self.app_dao._application_dao__db.run_query.return_value = True
+        result = self.app_dao.delete_application(application_id)
+        self.assertTrue(result)
+
 if __name__ == '__main__':
     unittest.main()

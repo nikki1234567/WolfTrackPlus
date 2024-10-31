@@ -25,13 +25,12 @@ jobs:
         
     - name: Set PYTHONPATH
       run: |
-        echo "PYTHONPATH=$(pwd)/src" >> $GITHUB_ENV  # Add src to PYTHONPATH
+        echo "PYTHONPATH=${GITHUB_WORKSPACE}" >> $GITHUB_ENV
 
     - name: Run tests with coverage
       run: |
-        coverage run -m unittest discover -s src/UnitTesting
+        python -m coverage run -m unittest discover src/UnitTesting -p "*_test.py"
         coverage report
-        coverage xml  # Generate XML report for Codecov
         
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3

@@ -1,5 +1,5 @@
 from DAO.sql_helper import sql_helper
-
+import base64
 
 class application_dao:
     """
@@ -26,6 +26,7 @@ class application_dao:
         notes,
         date_applied,
         status,
+        resume=None
     ):
         """
         Adds an application with all the specified arguments into the database.
@@ -63,28 +64,55 @@ class application_dao:
             "SELECT role_id FROM roles WHERE role='" + job_profile + "'"
         )[0][0]
 
-        return self.__db.run_query(
-    "INSERT INTO application (user_id, company_id, role_id, application_date, job_description, salary, location, status, imortant_links) VALUES ("
-    + str(userId)
-    + ", "
-    + str(companyId)
-    + ", "
-    + str(roleId)
-    + ", '"
-    + date_applied
-    + "', '"
-    + job_profile
-    + "', "
-    + str(salary)
-    + ", '"
-    + location
-    + "', '"
-    + status
-    + "', '"
-    + notes
-    + "');"
-)
+        if resume:
+            resume_data = base64.b64encode(resume).decode('utf-8')
+            base_query = (
+                "INSERT INTO application (user_id, company_id, role_id, application_date, "
+                "job_description, salary, location, status, imortant_links, resume) VALUES ("
+                f"{str(userId)}, "
+                f"{str(companyId)}, "
+                f"{str(roleId)}, "
+                f"{date_applied}, "
+                f"'{job_profile}', "
+                f"{str(salary)}, "
+                f"'{location}', "
+                f"'{status}', "
+                f"'{notes}', "
+                f"'{resume_data}'" 
+                ");"
+            )
+        else:
+            base_query = (
+                "INSERT INTO application (user_id, company_id, role_id, application_date, "
+                "job_description, salary, location, status, imortant_links, resume) VALUES ("
+                f"{str(userId)}, "
+                f"{str(companyId)}, "
+                f"{str(roleId)}, "
+                f"{date_applied}, "
+                f"'{job_profile}', "
+                f"{str(salary)}, "
+                f"'{location}', "
+                f"'{status}', "
+                f"'{notes}', "
+                "NULL" 
+                ");"
+            )
 
+        
+        # # if resume is None:
+        # #     base_query += "NULL);"
+        # # else:
+        # #     # base_query += f"'{resume_data}');"
+        # #     base_query += "NULL);"
+        # print('-------')
+        # print('-------')
+        # print('-------')
+        # print('-------')
+        # # print(base_query)
+        # print('-------')
+        # print('-------')
+        # print('-------') 
+        return self.__db.run_query(base_query)
 
     def get_application(self, email, application_status):
         """
@@ -120,6 +148,48 @@ class application_dao:
 
         print(res)
         return res
+
+    def get_resume(self, email):
+        """
+        Fetches the resume for a user based on their email.
+        
+        Args:
+            email (string): Email ID of the user
+            
+        Returns:
+            bytes: The resume binary data if found, None otherwise
+        """
+        try:
+            userId = self.__db.run_query(
+                "SELECT user_id FROM user WHERE email='" + email + "'"
+            )[0][0]
+
+            query = (
+                "SELECT resume "
+                + "FROM application "
+                + "WHERE user_id ="
+                + '"'+str(userId)+'"'
+                + " AND resume IS NOT NULL "
+                + "LIMIT 1"
+                )
+            print('------')
+            print('------')
+            print('------')
+            print('------')
+            print(query)
+            print('------')
+            print('------')
+            print('------')
+            result = self.__db.run_query(query)
+            
+            if result and result[0][0]:
+                resume_data = result[0][0]
+                return base64.b64decode(resume_data)
+            return None
+            
+        except Exception as e:
+            print(f"Error fetching resume: {e}")
+            return None
 
 
     def get_locations_for_application(self, email):

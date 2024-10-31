@@ -167,7 +167,7 @@ def passwordReset():
         else:
             successful_reset_email(email)
             password_reset.update_password(email, newPassword)
-            return redirect('/login', successMessage="Your password has been successfully reset.")
+            return render_template("login.html", successMessage="Your password has been successfully reset.")
     else:
         error = "Incorrect code"
         return render_template("forgot.html", codeSent="yes", email=session["email"], forgotError=error)

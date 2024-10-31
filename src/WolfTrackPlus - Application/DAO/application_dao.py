@@ -172,14 +172,6 @@ class application_dao:
                 + " AND resume IS NOT NULL "
                 + "LIMIT 1"
                 )
-            print('------')
-            print('------')
-            print('------')
-            print('------')
-            print(query)
-            print('------')
-            print('------')
-            print('------')
             result = self.__db.run_query(query)
             
             if result and result[0][0]:

@@ -125,5 +125,59 @@ class TestApplicationDAO(unittest.TestCase):
                 'notes', '2023-10-31', 'Applied', b'Resume data'
             )
 
+    def test_get_application_no_results(self):
+        email = 'user@example.com'
+        status = 'Nonexistent'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], []
+        ]
+        result = self.app_dao.get_application(email, status)
+        self.assertEqual(len(result), 0)
+
+    def test_get_resume_no_resume(self):
+        email = 'user@example.com'
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], []
+        ]
+        result = self.app_dao.get_resume(email)
+        self.assertIsNone(result)
+
+    def test_update_application_nonexistent(self):
+        application_id = 999
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            []
+        ]
+        with self.assertRaises(IndexError):
+            self.app_dao.update_application(
+                'Company', 'Location', 'Job', 50000,
+                'username', 'password', 'question', 'answer',
+                'notes', '2023-10-31', 'Applied', application_id
+            )
+
+    def test_change_status_invalid_application_id(self):
+        application_id = 999
+        self.app_dao._application_dao__db.run_query.return_value = True
+        result = self.app_dao.change_status(application_id, 'Interview')
+        self.assertTrue(result)
+
+    def test_delete_application_nonexistent(self):
+        application_id = 999
+        self.app_dao._application_dao__db.run_query.return_value = True
+        result = self.app_dao.delete_application(application_id)
+        self.assertTrue(result)
+
+    def test_add_application_sql_injection(self):
+        email = 'user@example.com'
+        malicious_input = "'; DROP TABLE users;--"
+        self.app_dao._application_dao__db.run_query.side_effect = [
+            [(1,)], None, [(1,)], None, [(1,)], True
+        ]
+        result = self.app_dao.add_application(
+            email, malicious_input, 'Location', 'Job', 50000,
+            'username', 'password', 'question', 'answer',
+            'notes', '2023-10-31', 'Applied', None
+        )
+        self.assertTrue(result)
+
 if __name__ == '__main__':
     unittest.main()

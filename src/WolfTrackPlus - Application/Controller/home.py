@@ -22,6 +22,7 @@ from pathlib import Path
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
+import pandas as pd
 
 project_root = Path(__file__).parent.parent
 
@@ -418,6 +419,29 @@ def download_resume():
             
     except Exception as e:
         print(f"Error in download_resume: {e}")
+        return f"Error: {str(e)}", 500
+    
+@home_route.route('/download_applications')
+def download_applications():
+    try:
+        columns = ["Company Name", "Status", "Application Date", "Application ID", "Location", "Role", "Salary", "Imortant Links"]
+        application_data = application.get(session["email"], "")
+        
+        df = pd.DataFrame(application_data, columns=columns)
+        
+        file_stream = io.BytesIO()
+        df.to_excel(file_stream, index=False, engine='openpyxl')
+        file_stream.seek(0)
+
+        return send_file(
+            file_stream,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            as_attachment=True,
+            download_name='applications.xlsx'
+        )
+            
+    except Exception as e:
+        print(f"Error in download_applications: {e}")
         return f"Error: {str(e)}", 500
 
 

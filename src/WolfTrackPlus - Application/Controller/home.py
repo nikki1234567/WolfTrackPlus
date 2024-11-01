@@ -14,6 +14,21 @@ from collections import Counter
 import requests
 import random
 import io
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import Flow
+import os
+from datetime import datetime  
+from pathlib import Path
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+
+project_root = Path(__file__).parent.parent
+
+CREDENTIALS_PATH = os.path.join(project_root, 'credentials', 'calendar_cred.json')
+
+SCOPES = ['https://www.googleapis.com/auth/calendar.events']
+
 
 api_key = '68188bd34eea4250107ae82ee6d61054'
 app_id = '394232b1'
@@ -256,6 +271,22 @@ def view():
     )
 
 
+
+def parse_date(date_str):
+    """Parse date that can be either a year or a full date."""
+    try:
+        # Check if the input is a single year
+        if len(date_str) == 4 and date_str.isdigit():
+            # If so, return January 1st of that year
+            return datetime.strptime(f"{date_str}-01-01", '%Y-%m-%d')
+        else:
+            # Otherwise, try to parse as a full date
+            return datetime.strptime(date_str, '%Y-%m-%d')
+    except ValueError:
+        # Return current date as fallback instead of error string
+        return datetime.now()
+
+
 @home_route.route("/add_new_application", methods=["GET", "POST"])
 # @login_required
 def add_new_application():
@@ -285,9 +316,13 @@ def add_new_application():
         if resume_file and resume_file.filename.endswith('.pdf'):
             resume_content = resume_file.read()
             print("Resume content length:", len(resume_content))  # Debug
-
-
-
+    # print('-----')
+    # print('-----')
+    # print('-----')
+    # print(date_applied)
+    # print('-----')
+    # print('-----')
+    # print('-----')
     result = application.post(
         session["email"],
         company_name,
@@ -307,6 +342,46 @@ def add_new_application():
         error = "This job application could not be stored in the database. Please try again."
         return render_template("home.html", jobAddError=error)
     data = {}
+    try:
+        print(f'Date applied value: {date_applied}')
+        
+        parsed_date = parse_date(date_applied)
+        formatted_date = parsed_date.strftime('%Y-%m-%d')
+        
+        flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_PATH, SCOPES)
+        creds = flow.run_local_server(port=0)
+        
+        service = build('calendar', 'v3', credentials=creds)
+        
+        event = {
+            'summary': f'Job Application: {company_name} - {job_profile}',
+            'description': f'''
+                Company: {company_name}
+                Position: {job_profile}
+                Location: {location}
+                Status: {status}
+                Notes: {notes}
+            ''',
+            'start': {
+                'date': formatted_date,  
+                'timeZone': 'UTC',
+            },
+            'end': {
+                'date': formatted_date,  
+                'timeZone': 'UTC',
+            }
+        }
+        
+        created_event = service.events().insert(calendarId='primary', body=event).execute()
+        print(f'Calendar event created: {created_event.get("htmlLink")}')
+        
+    except Exception as e:
+        print(f"Failed to create calendar event: {str(e)}")
+        import traceback
+        traceback.print_exc()  
+        pass
+
+
     s_email(
         company_name,
         location,

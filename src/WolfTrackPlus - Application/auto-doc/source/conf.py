@@ -27,8 +27,8 @@ print(sys.path)
 # -- Project information -----------------------------------------------------
 
 project = "WolfTrackPlus"
-copyright = "2023, Shiva Vara Prasad Kandhagatla, Prateek Singamsetty, Laasya Choudary Nandamuri, Jayanth Ramanidharan"
-author = "Shiva Vara Prasad Kandhagatla, Prateek Singamsetty, Laasya Choudary Nandamuri, Jayanth Ramanidharan"
+copyright = "2024, Dinesh Pasupuleti, Srivardhan Vura, Jay Joshi"
+author = "Dinesh Pasupuleti, Srivardhan Vura, Jay Joshi"
 
 # The full version, including alpha/beta/rc tags
 release = "v3.8"

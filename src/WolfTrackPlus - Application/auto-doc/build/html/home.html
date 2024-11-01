@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>home module &mdash; WolfTrackPlus v3.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=21591e83"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="user_controller module" href="user_controller.html" />
+    <link rel="prev" title="email_framework module" href="email_framework.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            WolfTrackPlus
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Controller</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="application_controller.html">application_controller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email_framework.html">email_framework module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">home module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#home.add_new_application"><code class="docutils literal notranslate"><span class="pre">add_new_application()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.auth"><code class="docutils literal notranslate"><span class="pre">auth()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.change_status_application"><code class="docutils literal notranslate"><span class="pre">change_status_application()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.delete_application"><code class="docutils literal notranslate"><span class="pre">delete_application()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.edit_application"><code class="docutils literal notranslate"><span class="pre">edit_application()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.edit_profile"><code class="docutils literal notranslate"><span class="pre">edit_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.loginUser"><code class="docutils literal notranslate"><span class="pre">loginUser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.signup"><code class="docutils literal notranslate"><span class="pre">signup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#home.view"><code class="docutils literal notranslate"><span class="pre">view()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_controller.html">user_controller module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#dao">DAO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html#unittesting">UnitTesting</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">WolfTrackPlus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Controller</a></li>
+      <li class="breadcrumb-item active">home module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/home.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-home">
+<span id="home-module"></span><h1>home module<a class="headerlink" href="#module-home" title="Link to this heading"></a></h1>
+<p>MIT License</p>
+<p>Copyright (c) 2023 Shiva Vara Prasad Kandhagatla, Prateek Singamsetty, Laasya Choudary Nandamuri, Jayanth Ramanidharan
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="home.add_new_application">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">add_new_application</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.add_new_application" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>A new application is added with all the inputs user filled.
+.. list-table::
+:header-rows: 1</p>
+<ul class="simple">
+<li><ul>
+<li><p>Content</p></li>
+<li><p>Value</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>company Name</p></li>
+<li><p>Name of the company</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Date Applied</p></li>
+<li><p>Today’s date</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Location</p></li>
+<li><p>Location you entered for job application</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Salary</p></li>
+<li><p>Your salary expectation</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>User_name</p></li>
+<li><p>Username you want to create in job application portal</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Password</p></li>
+<li><p>Password you wish to set for the job application portal</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Security Question</p></li>
+<li><p>Any relevant question you want to set</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Security Answer</p></li>
+<li><p>Corresponding answer for the previous question</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Status</p></li>
+<li><p>Applied</p></li>
+</ul>
+</li>
+<li><ul>
+<li><p>Notes</p></li>
+<li><p>Any notes or information you would like to share with the company</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.auth">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">auth</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.auth" title="Link to this definition"></a></dt>
+<dd><p>Obtains the correct credentials, autheticates and creates a session for the user to stay logged in.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.change_status_application">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">change_status_application</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.change_status_application" title="Link to this definition"></a></dt>
+<dd><p>automatic update of any change in status of the application is updated here.
+&#64;return 0: reports error and update will not be saved, 1: successful updation</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.delete_application">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">delete_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">application_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#home.delete_application" title="Link to this definition"></a></dt>
+<dd><p>deleted an application when delete button is clicked inside a particular application
+:param application_id: It is set internally when delete option on one application is clicked
+&#64;return 0: if error, 1: if successfully deleted</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.edit_application">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">edit_application</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.edit_application" title="Link to this definition"></a></dt>
+<dd><p>edits contents related to job application and notifies user if edited successfully
+&#64;return: 0 if error occurs, 1 if successfully edited and redirects to authentication page</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.edit_profile">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">edit_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#home.edit_profile" title="Link to this definition"></a></dt>
+<dd><p>From the request form created to change either user_id, name, gender, or location,
+One more paramters will be changed</p>
+<p>&#64;return: 0 if error occurs, 1 if successfully changed</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.login">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.login" title="Link to this definition"></a></dt>
+<dd><p>renders the html page for login, and takes user inputs .</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.loginUser">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">loginUser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.loginUser" title="Link to this definition"></a></dt>
+<dd><p>Obtains username, password to login to the user profile
+&#64;return 0: If username does not exist, 2: Incorrect password, else: redirected to user page successfully.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.logout">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#home.logout" title="Link to this definition"></a></dt>
+<dd><p>Logs out user when clicked logout button
+&#64;return: login page of the website</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.signup">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">signup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.signup" title="Link to this definition"></a></dt>
+<dd><p>This obtains all user information when user is signing up for the first time
+:param name:
+:param username:
+:param email:
+:param password:
+:param gender:
+:param location:</p>
+<p>&#64;return 0: if email already exists, or network issue to create email profile, 1 : if profile is created successfully.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="home.view">
+<span class="sig-prename descclassname"><span class="pre">home.</span></span><span class="sig-name descname"><span class="pre">view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home.view" title="Link to this definition"></a></dt>
+<dd><p>Obtains the main page content of the wolftrackplus website.
+It contains the retrieval parameters to get custom events, deadlines, and incoming general deadlines.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="email_framework.html" class="btn btn-neutral float-left" title="email_framework module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_controller.html" class="btn btn-neutral float-right" title="user_controller module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Shiva Vara Prasad Kandhagatla, Prateek Singamsetty, Laasya Choudary Nandamuri, Jayanth Ramanidharan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

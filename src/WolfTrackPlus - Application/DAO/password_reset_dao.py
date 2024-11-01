@@ -53,13 +53,6 @@ class password_reset_dao:
             return None
         return result[0][0]
 
-        sQuery = f"INSERT INTO password_reset(email, code) VALUES('{email}', {code}) ON DUPLICATE KEY UPDATE code = {code};"
-        print(sQuery)
-
-        res = self.__db.run_query(sQuery)
-
-        return res
-
 
     def update_password(self, email, password):
         """

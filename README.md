@@ -128,21 +128,30 @@ Keep track of dates, notes, tasks, job details, salaries, locations, and valuabl
     
 ![image](https://user-images.githubusercontent.com/51504486/144655666-a5d8eae0-efb2-4fd4-94da-b7dae79f588e.png)
 
-- **Dashboard**
-  
-    - **Job Apply Feature**
+- **Forgot Password Page**
+  - User Interface to update password to the Wolftrack app. After password is updated, user will be redirected to the Login page
+    
+![image](https://github.com/user-attachments/assets/edca8a12-195d-4b55-9df1-ad544340b7f9)
 
-       The job application feature showcases various software engineering positions, presenting pertinent details such as company names and job URLs. Users can  browse through the available job listings and apply for positions by accessing the provided job URLs. Clicking on a URL redirects users to the specific job posting, enabling them to proceed with their applications directly on the respective job posting page.<br>
-      
+## Dashboard
+
+- **Monthly Application Visualization**  
+  Track your application activity over time with an interactive bar chart that displays the number of submissions each month, right on your homepage.<br>
+
+  ![image](https://github.com/user-attachments/assets/c6f3737d-ec67-480a-bb36-d8cc03ee2eb9)
+
 <br>
 
-   ![image](https://github.com/prateeksingamsetty/WolfTrackPlus/blob/jayanth/Project3/Assets/Job_apply_feature.jpg)
+- **Job Apply Feature**  
+  Discover and apply for software engineering positions. Each job listing provides essential information, including the company name and job URL. Users can explore available listings and click the URLs to go directly to the specific job posting page for application submission.<br>
 
-   - **All Job Applications Locations Display**
+  ![image](https://github.com/prateeksingamsetty/WolfTrackPlus/blob/jayanth/Project3/Assets/Job_apply_feature.jpg)
+
+<br>
+
+ - **All Job Applications Locations Display**
       
 The developed feature entails showcasing all the locations involved in the application process. Utilizing the OpenCage library, we retrieve coordinates corresponding to each location, enabling us to display them accurately on the website's map interface. This functionality allows users to visualize and explore the various application locations seamlessly integrated into the map displayed on the website.
-
-<br>
 
 ![image](https://github.com/prateeksingamsetty/WolfTrackPlus/blob/project3/Project3/Assets/Application_Locations.jpg?raw=true)
 
